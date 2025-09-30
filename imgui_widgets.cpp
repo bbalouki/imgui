@@ -1,4 +1,4 @@
-// dear imgui, v1.92.3 WIP
+// dear imgui, v1.92.4 WIP
 // (widgets code)
 
 /*
@@ -5180,7 +5180,7 @@ bool ImGui::InputTextEx(const char* label, const char* hint, char* buf, int buf_
                 apply_new_text = "";
                 apply_new_text_length = 0;
                 value_changed = true;
-                IMSTB_TEXTEDIT_CHARTYPE empty_string;
+                char empty_string = 0;
                 stb_textedit_replace(state, state->Stb, &empty_string, 0);
             }
             else if (strcmp(state->TextA.Data, state->TextToRevertTo.Data) != 0)
@@ -5525,7 +5525,7 @@ bool ImGui::InputTextEx(const char* label, const char* hint, char* buf, int buf_
             text_col, clip_rect.AsVec4(),
             line_index->get_line_begin(buf_display, line_visible_n0),
             line_index->get_line_end(buf_display, line_visible_n1 - 1),
-            wrap_width, ImDrawTextFlags_WrapKeepBlanks);
+            wrap_width, ImDrawTextFlags_WrapKeepBlanks | ImDrawTextFlags_CpuFineClip);
 
     // Render blinking cursor
     if (render_cursor)
