@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(ImGuiLib VERSION 1.92.3 LANGUAGES CXX)
+project(ImGuiLib VERSION v1.92.5 LANGUAGES CXX)
 
 # Library Target
 add_library(imgui STATIC
@@ -18,6 +18,7 @@ set_property(TARGET imgui PROPERTY DEBUG_POSTFIX "_d")
 target_include_directories(imgui PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/backends>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/misc/cpp>
     # When installed, headers will be in <prefix>/include/imgui
     $<INSTALL_INTERFACE:include/imgui>
 )
@@ -27,7 +28,10 @@ find_package(OpenGL REQUIRED)
 target_link_libraries(imgui PUBLIC glfw OpenGL::GL)
 
 # 1. Install the main ImGui header files
-file(GLOB IMGUI_ROOT_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
+set(IMGUI_BACKEND_HEADERS
+    "${CMAKE_CURRENT_SOURCE_DIR}/backends/imgui_impl_glfw.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/backends/imgui_impl_opengl3.h"
+)
 install(FILES ${IMGUI_ROOT_HEADERS}
         DESTINATION include/imgui)
 
@@ -37,9 +41,8 @@ install(FILES ${IMGUI_BACKEND_HEADERS}
         DESTINATION include/imgui/backends)
 
 # 3. Install the misc header files into their own subdirectory
-file(GLOB IMGUI_MISC_HEADERS
-    "${CMAKE_CURRENT_SOURCE_DIR}/misc/*.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/misc/cpp/*.h"
+set(IMGUI_MISC_HEADERS
+    "${CMAKE_CURRENT_SOURCE_DIR}/misc/cpp/imgui_stdlib.h"
 )
 install(FILES ${IMGUI_MISC_HEADERS}
         DESTINATION include/imgui/misc)
