@@ -1,11 +1,11 @@
 @PACKAGE_INIT@
 
 # Include the file that defines the ImGui::imgui imported target
-include("${CMAKE_CURRENT_LIST_DIR}/ImGuiLibTargets.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/ImGuiTargets.cmake")
 
 # Find dependencies. A project using ImGui shouldn't have to find them itself.
 include(CMakeFindDependencyMacro)
 find_dependency(glfw3 CONFIG REQUIRED)
 find_dependency(OpenGL REQUIRED)
 
-check_required_components(ImGuiLib)
+check_required_components(ImGui)
