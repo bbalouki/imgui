@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(ImGuiLib VERSION v1.92.7 LANGUAGES CXX)
+project(ImGuiLib VERSION v1.92.5 LANGUAGES CXX)
 
 # Library Target
 add_library(imguilib STATIC
