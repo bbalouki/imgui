@@ -15,9 +15,6 @@ add_library(imgui STATIC
 )
 add_library(ImGui::ImGui ALIAS imgui)
 
-# This creates 'imgui_d.lib' for Debug and 'imgui.lib' for Release.
-set_property(TARGET imgui PROPERTY DEBUG_POSTFIX "_d")
-
 target_include_directories(imgui PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/backends>
