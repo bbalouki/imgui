@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 project(ImGui VERSION "1.92.5" LANGUAGES CXX)
 
+include(GNUInstallDirs)
 # Library Target
 add_library(imgui STATIC
     imgui.cpp
@@ -21,8 +22,7 @@ target_include_directories(imgui PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/backends>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/misc/cpp>
-    # When installed, headers will be in <prefix>/include/imgui
-    $<INSTALL_INTERFACE:include/imgui>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/imgui>
 )
 
 find_package(glfw3 CONFIG REQUIRED)
@@ -30,15 +30,15 @@ find_package(OpenGL REQUIRED)
 target_link_libraries(imgui PUBLIC glfw OpenGL::GL)
 
 # 1. Install the main ImGui header files
-set(IMGUI_BACKEND_HEADERS
-    "${CMAKE_CURRENT_SOURCE_DIR}/backends/imgui_impl_glfw.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/backends/imgui_impl_opengl3.h"
-)
+file(GLOB IMGUI_ROOT_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
 install(FILES ${IMGUI_ROOT_HEADERS}
         DESTINATION include/imgui)
 
 # 2. Install the backend header files into their own subdirectory
-file(GLOB IMGUI_BACKEND_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/backends/*.h")
+set(IMGUI_BACKEND_HEADERS
+    "${CMAKE_CURRENT_SOURCE_DIR}/backends/imgui_impl_glfw.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/backends/imgui_impl_opengl3.h"
+)
 install(FILES ${IMGUI_BACKEND_HEADERS}
         DESTINATION include/imgui/backends)
 
@@ -50,7 +50,6 @@ install(FILES ${IMGUI_MISC_HEADERS}
         DESTINATION include/imgui/misc)
 
 # 4. Install the compiled library targets and create the CMake export set
-include(GNUInstallDirs)
 install(TARGETS imgui
     EXPORT ImGuiTargets
     # This installs both the release and debug versions into the same directories
