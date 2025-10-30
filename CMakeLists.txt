@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(ImGui VERSION v1.92.52 LANGUAGES CXX)
+project(ImGui VERSION "1.92.52" LANGUAGES CXX)
 
 # Library Target
 add_library(imgui STATIC
