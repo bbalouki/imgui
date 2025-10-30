@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(ImGui VERSION "1.92.52" LANGUAGES CXX)
+project(ImGui VERSION "1.92.5" LANGUAGES CXX)
 
 # Library Target
 add_library(imgui STATIC
@@ -7,6 +7,7 @@ add_library(imgui STATIC
     imgui_draw.cpp
     imgui_tables.cpp
     imgui_widgets.cpp
+    imgui_demo.cpp
     backends/imgui_impl_glfw.cpp
     backends/imgui_impl_opengl3.cpp
     misc/cpp/imgui_stdlib.cpp
