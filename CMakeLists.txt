@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(ImGuiLib VERSION v1.92.5 LANGUAGES CXX)
+project(ImGuiLib VERSION v1.92.6 LANGUAGES CXX)
 
 # Library Target
 add_library(imgui STATIC
@@ -11,6 +11,7 @@ add_library(imgui STATIC
     backends/imgui_impl_opengl3.cpp
     misc/cpp/imgui_stdlib.cpp
 )
+add_library(ImGui::ImGui ALIAS imgui)
 
 # This creates 'imgui_d.lib' for Debug and 'imgui.lib' for Release.
 set_property(TARGET imgui PROPERTY DEBUG_POSTFIX "_d")
