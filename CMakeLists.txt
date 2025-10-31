@@ -3,7 +3,7 @@ project(ImGui VERSION "1.92.5" LANGUAGES CXX)
 
 include(GNUInstallDirs)
 # Library Target
-add_library(imgui
+add_library(ImGui
     imgui.cpp
     imgui_draw.cpp
     imgui_tables.cpp
@@ -13,12 +13,12 @@ add_library(imgui
     backends/imgui_impl_opengl3.cpp
     misc/cpp/imgui_stdlib.cpp
 )
-add_library(ImGui::ImGui ALIAS imgui)
+add_library(ImGui::ImGui ALIAS ImGui)
 find_package(glfw3 CONFIG REQUIRED)
 find_package(OpenGL REQUIRED)
-target_link_libraries(imgui PUBLIC glfw OpenGL::GL)
+target_link_libraries(ImGui PUBLIC glfw OpenGL::GL)
 
-target_include_directories(imgui PUBLIC
+target_include_directories(ImGui PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/backends>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/misc/cpp>
@@ -45,7 +45,7 @@ install(FILES ${IMGUI_MISC_HEADERS}
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/imgui/misc)
 
 # 4. Install the compiled library targets and create the CMake export set
-install(TARGETS imgui
+install(TARGETS ImGui
     EXPORT ImGuiTargets
     # This installs both the release and debug versions into the same directories
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
