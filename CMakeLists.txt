@@ -27,7 +27,7 @@ target_include_directories(imgui PUBLIC
 # 1. Install the main ImGui header files
 file(GLOB IMGUI_ROOT_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
 install(FILES ${IMGUI_ROOT_HEADERS}
-        DESTINATION include/imgui)
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/imgui)
 
 # 2. Install the backend header files into their own subdirectory
 set(IMGUI_BACKEND_HEADERS
@@ -35,14 +35,14 @@ set(IMGUI_BACKEND_HEADERS
     "${CMAKE_CURRENT_SOURCE_DIR}/backends/imgui_impl_opengl3.h"
 )
 install(FILES ${IMGUI_BACKEND_HEADERS}
-        DESTINATION include/imgui/backends)
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/imgui/backends)
 
 # 3. Install the misc header files into their own subdirectory
 set(IMGUI_MISC_HEADERS
     "${CMAKE_CURRENT_SOURCE_DIR}/misc/cpp/imgui_stdlib.h"
 )
 install(FILES ${IMGUI_MISC_HEADERS}
-        DESTINATION include/imgui/misc)
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/imgui/misc)
 
 # 4. Install the compiled library targets and create the CMake export set
 install(TARGETS imgui
