@@ -3,7 +3,7 @@ project(ImGui VERSION "1.92.5" LANGUAGES CXX)
 
 include(GNUInstallDirs)
 # Library Target
-add_library(imgui STATIC
+add_library(imgui
     imgui.cpp
     imgui_draw.cpp
     imgui_tables.cpp
@@ -14,6 +14,9 @@ add_library(imgui STATIC
     misc/cpp/imgui_stdlib.cpp
 )
 add_library(ImGui::ImGui ALIAS imgui)
+find_package(glfw3 CONFIG REQUIRED)
+find_package(OpenGL REQUIRED)
+target_link_libraries(imgui PUBLIC glfw OpenGL::GL)
 
 target_include_directories(imgui PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
@@ -21,11 +24,6 @@ target_include_directories(imgui PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/misc/cpp>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/imgui>
 )
-
-find_package(glfw3 CONFIG REQUIRED)
-find_package(OpenGL REQUIRED)
-target_link_libraries(imgui PUBLIC glfw OpenGL::GL)
-
 # 1. Install the main ImGui header files
 file(GLOB IMGUI_ROOT_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
 install(FILES ${IMGUI_ROOT_HEADERS}
@@ -65,9 +63,20 @@ install(EXPORT ImGuiTargets
 # 6. Generate and install the ImGuiConfig.cmake file
 include(CMakePackageConfigHelpers)
 configure_package_config_file(
-    "cmake/ImGuiConfig.cmake.in"
+    "${CMAKE_CURRENT_LIST_DIR}/cmake/ImGuiConfig.cmake.in"
     "${CMAKE_CURRENT_BINARY_DIR}/ImGuiConfig.cmake"
     INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ImGui
 )
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/ImGuiConfig.cmake"
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ImGui)
+
+write_basic_package_version_file(
+    "ImGuiConfigVersion.cmake"
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY AnyNewerVersion
+)
+install(
+    FILES 
+    "${CMAKE_CURRENT_BINARY_DIR}/ImGuiConfig.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/ImGuiConfigVersion.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/ImGui"
+)
+
